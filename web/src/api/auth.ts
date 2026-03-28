@@ -1,11 +1,5 @@
 import { request } from './request';
-import {
-  LoginParams,
-  RegisterParams,
-  SendCodeParams,
-  LoginResult,
-  User,
-} from '@/types';
+import type { LoginParams, RegisterParams, SendCodeParams, LoginResult, User } from '@/types';
 
 export const authApi = {
   sendCode(data: SendCodeParams) {

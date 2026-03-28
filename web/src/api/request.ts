@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { message } from 'antd';
-import { useUserStore } from '@stores/user.store';
+import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios';
+import { message } from 'ant-design-vue';
+import { useUserStore } from '@stores/user';
 
 const instance: AxiosInstance = axios.create({
   baseURL: '/api',
@@ -12,9 +12,9 @@ const instance: AxiosInstance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = useUserStore.getState().token;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const userStore = useUserStore();
+    if (userStore.token) {
+      config.headers.Authorization = `Bearer ${userStore.token}`;
     }
     return config;
   },
@@ -26,20 +26,21 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (response) => {
     const { code, message: msg, data } = response.data;
-    
+
     if (code === 0) {
       return data;
     }
-    
+
     message.error(msg || '请求失败');
     return Promise.reject(new Error(msg));
   },
   (error) => {
     if (error.response?.status === 401) {
-      useUserStore.getState().logout();
+      const userStore = useUserStore();
+      userStore.logout();
       window.location.href = '/login';
     }
-    
+
     const msg = error.response?.data?.message || '网络错误';
     message.error(msg);
     return Promise.reject(error);

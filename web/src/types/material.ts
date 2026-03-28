@@ -19,10 +19,3 @@ export interface MaterialListParams {
   page?: number;
   pageSize?: number;
 }
-
-export interface MaterialListResult {
-  list: Material[];
-  total: number;
-  page: number;
-  pageSize: number;
-}

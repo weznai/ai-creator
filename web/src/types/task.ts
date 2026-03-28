@@ -7,8 +7,8 @@ export interface ImageTask {
   modelName: string;
   resultImages: string[];
   createdAt: string;
-  completedAt: string;
-  costTime: number;
+  completedAt?: string;
+  costTime?: number;
 }
 
 export interface CreateImageTaskParams {
@@ -28,7 +28,7 @@ export interface VideoTask {
   status: 'pending' | 'processing' | 'success' | 'failed';
   generateType: string;
   duration: number;
-  resultVideo: string;
+  resultVideo?: string;
   createdAt: string;
 }
 
